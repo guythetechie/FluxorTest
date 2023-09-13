@@ -1,4 +1,6 @@
-﻿@page "/counter"
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@page "/counter"
 @using Fluxor;
 @attribute [RenderModeServer]
 
@@ -18,4 +20,13 @@
     private IDispatcher Dispatcher { get; set; } = default!;
 
     private void IncrementCount() => Dispatcher.Dispatch(new CountIncremented());
+
+    [Inject]
+    private IStore Store { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Store.InitializeAsync();
+    }
 }
