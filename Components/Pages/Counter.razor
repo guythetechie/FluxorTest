@@ -1,0 +1,21 @@
+﻿@page "/counter"
+@using Fluxor;
+@attribute [RenderModeServer]
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @CounterState.Value.Count</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    [Inject]
+    private IState<CounterState> CounterState { get; set; } = default!;
+
+    [Inject]
+    private IDispatcher Dispatcher { get; set; } = default!;
+
+    private void IncrementCount() => Dispatcher.Dispatch(new CountIncremented());
+}
